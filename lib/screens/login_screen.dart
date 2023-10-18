@@ -5,18 +5,22 @@ import 'dart:convert';
 import 'package:car_wash_app/screens/home_screen.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController =
+      TextEditingController(text: "eve.holt@reqres.in");
+  TextEditingController passwordController =
+      TextEditingController(text: "cityslicka");
+  bool rememberUser = false;
+  bool isLoading = false;
+  bool isPasswordVisible = false;
   late Color myColor;
   late Size mediaSize;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  bool rememberUser = false;
 
   Future<Map<String, dynamic>?> _login(String email, String password) async {
     final response = await http.post(
@@ -62,12 +66,12 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            Icons.location_on_sharp,
+            Icons.car_repair,
             size: 100,
             color: Colors.white,
           ),
           Text(
-            "GO MAP",
+            "Login",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -111,18 +115,17 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         _buildGreyText("Please login with your information"),
-        const SizedBox(height: 60),
+        const SizedBox(height: 50),
         _buildGreyText("Email address"),
         _buildInputField(emailController),
         const SizedBox(height: 40),
         _buildGreyText("Password"),
-        _buildInputField(passwordController, isPassword: true),
+        _buildPasswordField(passwordController),
         const SizedBox(height: 20),
         _buildRememberForgot(),
         const SizedBox(height: 20),
         _buildLoginButton(),
-        const SizedBox(height: 20),
-        // _buildOtherLogin(),
+        const SizedBox(height: 40),
       ],
     );
   }
@@ -140,10 +143,19 @@ class _LoginPageState extends State<LoginPage> {
       controller: controller,
       decoration: InputDecoration(
         suffixIcon: isPassword
-            ? const Icon(Icons.remove_red_eye)
+            ? IconButton(
+                icon: Icon(
+                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isPasswordVisible = !isPasswordVisible;
+                  });
+                },
+              )
             : const Icon(Icons.done),
       ),
-      obscureText: isPassword,
+      obscureText: isPassword ? !isPasswordVisible : false,
     );
   }
 
@@ -174,49 +186,75 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void _handleLogin() async {
+    if (isLoading) return;
+
+    setState(() {
+      isLoading = true;
+    });
+
+    final email = emailController.text;
+    final password = passwordController.text;
+    final response = await _login(email, password);
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response != null) {
+      final token = response["token"];
+      if (token.isNotEmpty) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("Login Failed"),
+              content: const Text("Email or password is incorrect"),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  }
+
   Widget _buildLoginButton() {
     return ElevatedButton(
-      onPressed: () async {
-        final email = emailController.text;
-        final password = passwordController.text;
-        final response = await _login(email, password);
-
-        if (response != null) {
-          final token = response["token"];
-          if (token.isNotEmpty) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
-              ),
-            );
-          } else {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text("Login Failed"),
-                  content: const Text("Email or password is incorrect"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text("OK"),
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-        }
-      },
+      onPressed: _handleLogin,
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 20,
         shadowColor: myColor,
         minimumSize: const Size.fromHeight(60),
       ),
-      child: const Text("LOGIN"),
+      child: _buildButtonChild(),
     );
+  }
+
+  Widget _buildButtonChild() {
+    if (isLoading) {
+      return const CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      );
+    } else {
+      return const Text("LOGIN");
+    }
+  }
+
+  Widget _buildPasswordField(TextEditingController controller) {
+    return _buildInputField(controller, isPassword: true);
   }
 }
