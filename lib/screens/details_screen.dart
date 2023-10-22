@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class PackageDetailPage extends StatefulWidget {
+import 'package:car_wash_app/screens/payment_method_screen.dart';
+
+class PackageDetailScreen extends StatefulWidget {
   final Map<String, dynamic> package;
 
-  const PackageDetailPage({Key? key, required this.package}) : super(key: key);
+  const PackageDetailScreen({Key? key, required this.package})
+      : super(key: key);
 
   @override
-  State<PackageDetailPage> createState() => _PackageDetailPageState();
+  State<PackageDetailScreen> createState() => _PackageDetailScreenState();
 }
 
-class _PackageDetailPageState extends State<PackageDetailPage> {
+class _PackageDetailScreenState extends State<PackageDetailScreen> {
   bool isFavorite = false;
   List<bool> additionalServices = List.generate(7, (index) => false);
 
@@ -218,7 +221,14 @@ class _PackageDetailPageState extends State<PackageDetailPage> {
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const PaymentMethodScreen(),
+                              ),
+                            );
+                          },
                           style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.red),
