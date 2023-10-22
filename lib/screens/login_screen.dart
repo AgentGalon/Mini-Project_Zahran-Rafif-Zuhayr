@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:provider/provider.dart';
 
+import 'package:car_wash_app/providers/login_provider.dart';
 import 'package:car_wash_app/screens/home_screen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,23 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   bool isPasswordVisible = false;
   late Color myColor;
   late Size mediaSize;
-
-  Future<Map<String, dynamic>?> _login(String email, String password) async {
-    final response = await http.post(
-      Uri.parse('https://reqres.in/api/login'),
-      body: {
-        'email': email,
-        'password': password,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      return responseData;
-    } else {
-      return null;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,103 +120,56 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildInputField(TextEditingController controller,
-      {isPassword = false}) {
+  Widget _buildInputField(
+    TextEditingController controller, {
+    isPassword = false,
+  }) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return TextField(
       controller: controller,
       decoration: InputDecoration(
         suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(
-                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  authProvider.isPasswordVisible
+                      ? Icons.visibility
+                      : Icons.visibility_off,
                 ),
                 onPressed: () {
-                  setState(() {
-                    isPasswordVisible = !isPasswordVisible;
-                  });
+                  authProvider.togglePasswordVisibility();
                 },
               )
             : const Icon(Icons.done),
       ),
-      obscureText: isPassword ? !isPasswordVisible : false,
+      obscureText: isPassword ? !authProvider.isPasswordVisible : false,
     );
   }
 
   Widget _buildRememberForgot() {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
             Checkbox(
-              value: rememberUser,
+              value: authProvider.rememberUser,
               onChanged: (value) {
-                setState(
-                  () {
-                    rememberUser = value!;
-                  },
-                );
+                authProvider.toggleRememberUser();
               },
             ),
             _buildGreyText("Remember me"),
           ],
         ),
-        TextButton(
-          onPressed: () {},
-          child: _buildGreyText("I forgot my password"),
-        ),
       ],
     );
   }
 
-  void _handleLogin() async {
-    if (isLoading) return;
-
-    setState(() {
-      isLoading = true;
-    });
-
-    final email = emailController.text;
-    final password = passwordController.text;
-    final response = await _login(email, password);
-
-    setState(() {
-      isLoading = false;
-    });
-
-    if (response != null) {
-      final token = response["token"];
-      if (token.isNotEmpty) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text("Login Failed"),
-              content: const Text("Email or password is incorrect"),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    }
-  }
-
   Widget _buildLoginButton() {
     return ElevatedButton(
-      onPressed: _handleLogin,
+      onPressed: () => _handleLogin(context),
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 20,
@@ -256,5 +192,49 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildPasswordField(TextEditingController controller) {
     return _buildInputField(controller, isPassword: true);
+  }
+
+  void _handleLogin(BuildContext context) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    if (isLoading) return;
+
+    setState(() {
+      isLoading = true;
+    });
+
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    await authProvider.login(email, password);
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (authProvider.isLoggedIn) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Login Failed"),
+            content: const Text("Email or password is incorrect"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
