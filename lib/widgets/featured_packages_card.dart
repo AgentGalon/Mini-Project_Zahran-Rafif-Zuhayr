@@ -136,7 +136,7 @@ class _RecomendCardState extends State<RecomendCard> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => PackageDetailPage(package: package),
+                builder: (context) => PackageDetailScreen(package: package),
               ),
             );
           },
