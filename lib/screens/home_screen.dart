@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:car_wash_app/providers/home_screen_provider.dart';
 import 'package:car_wash_app/widgets/bottom_nav_bar.dart';
 import 'package:car_wash_app/widgets/featured_packages_card.dart';
 import 'package:car_wash_app/screens/profile_screen.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
