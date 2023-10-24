@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
-  const PaymentMethodScreen({super.key});
+  final double totalPrice;
+
+  const PaymentMethodScreen({Key? key, required this.totalPrice})
+      : super(key: key);
 
   @override
   State<PaymentMethodScreen> createState() => _PaymentMethodScreenState();
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
-  int type = 1;
+  int type = 0;
+  double fee = 0.0;
 
   void handleRadio(Object? e) => setState(() {
         type = e as int;
@@ -66,28 +70,35 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                               Radio(
                                 value: 1,
                                 groupValue: type,
-                                onChanged: handleRadio,
+                                onChanged: (value) {
+                                  handleRadio(value);
+                                  setState(() {
+                                    fee = 3.0; // Fee untuk PayPal
+                                  });
+                                },
                                 activeColor: Colors.red,
                               ),
                               Text(
-                                "Google Pay",
+                                "PayPal",
                                 style: type == 1
                                     ? const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black)
+                                        color: Colors.black,
+                                      )
                                     : const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.grey),
+                                        color: Colors.grey,
+                                      ),
                               ),
                             ],
                           ),
                           Image.asset(
-                            "assets/images/truck.png",
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
+                            "assets/images/paypal.png",
+                            width: 80,
+                            height: 80,
+                            // fit: BoxFit.cover,
                           ),
                         ],
                       ),
@@ -119,7 +130,12 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                               Radio(
                                 value: 2,
                                 groupValue: type,
-                                onChanged: handleRadio,
+                                onChanged: (value) {
+                                  handleRadio(value);
+                                  setState(() {
+                                    fee = 5.0; // Fee untuk Google Pay
+                                  });
+                                },
                                 activeColor: Colors.red,
                               ),
                               Text(
@@ -128,19 +144,21 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                                     ? const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black)
+                                        color: Colors.black,
+                                      )
                                     : const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.grey),
+                                        color: Colors.grey,
+                                      ),
                               ),
                             ],
                           ),
                           Image.asset(
-                            "assets/images/truck.png",
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
+                            "assets/images/google pay.png",
+                            width: 60,
+                            height: 60,
+                            // fit: BoxFit.cover,
                           ),
                         ],
                       ),
@@ -172,28 +190,35 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                               Radio(
                                 value: 3,
                                 groupValue: type,
-                                onChanged: handleRadio,
+                                onChanged: (value) {
+                                  handleRadio(value);
+                                  setState(() {
+                                    fee = 6.0; // Fee untuk Credit Card
+                                  });
+                                },
                                 activeColor: Colors.red,
                               ),
                               Text(
-                                "Google Pay",
+                                "Apple Pay",
                                 style: type == 3
                                     ? const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black)
+                                        color: Colors.black,
+                                      )
                                     : const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.grey),
+                                        color: Colors.grey,
+                                      ),
                               ),
                             ],
                           ),
                           Image.asset(
-                            "assets/images/truck.png",
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
+                            "assets/images/apple pay.png",
+                            width: 60,
+                            height: 60,
+                            // fit: BoxFit.cover,
                           ),
                         ],
                       ),
@@ -225,26 +250,33 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                               Radio(
                                 value: 4,
                                 groupValue: type,
-                                onChanged: handleRadio,
+                                onChanged: (value) {
+                                  handleRadio(value);
+                                  setState(() {
+                                    fee = 4.0; // Fee untuk Amazon Pay
+                                  });
+                                },
                                 activeColor: Colors.red,
                               ),
                               Text(
-                                "Google Pay",
+                                "Amazon Pay",
                                 style: type == 4
                                     ? const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black)
+                                        color: Colors.black,
+                                      )
                                     : const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.grey),
+                                        color: Colors.grey,
+                                      ),
                               ),
                             ],
                           ),
                           Image.asset(
-                            "assets/images/truck.png",
-                            width: 70,
+                            "assets/images/amazon pay.png",
+                            width: 90,
                             height: 70,
                             fit: BoxFit.cover,
                           ),
@@ -257,7 +289,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Sub-Total",
                       style: TextStyle(
                         fontSize: 15,
@@ -266,8 +298,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                       ),
                     ),
                     Text(
-                      "price",
-                      style: TextStyle(
+                      "\$${widget.totalPrice.toStringAsFixed(2)}",
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -278,7 +310,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Fee",
                       style: TextStyle(
                         fontSize: 15,
@@ -287,8 +319,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                       ),
                     ),
                     Text(
-                      "price",
-                      style: TextStyle(
+                      "\$$fee",
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -302,7 +334,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Total Prize",
                       style: TextStyle(
                         fontSize: 15,
@@ -310,8 +342,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                       ),
                     ),
                     Text(
-                      "price",
-                      style: TextStyle(
+                      "\$${(widget.totalPrice + fee).toStringAsFixed(2)}",
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                         color: Colors.redAccent,
