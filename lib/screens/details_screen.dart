@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'package:car_wash_app/screens/payment_method_screen.dart';
+import 'package:car_wash_app/providers/home_screen_provider.dart';
 import 'package:car_wash_app/providers/details_screen_provider.dart';
+import 'package:car_wash_app/screens/payment_method_screen.dart';
 
 class PackageDetailScreen extends StatefulWidget {
   final Map<String, dynamic> package;
@@ -25,7 +26,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
     10.00,
     10.00,
     20.00,
-    15.00
+    15.00,
   ];
   double totalPrice = 0.0;
 
@@ -143,30 +144,43 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
+                              final homeScreenModel =
+                                  Provider.of<HomeScreenModel>(context,
+                                      listen: false);
                               detailScreenProvider.toggleFavorite();
+                              if (detailScreenProvider.isFavorite) {
+                                homeScreenModel.addToFavorites(widget.package);
+                              } else {
+                                homeScreenModel
+                                    .removeFromFavorites(widget.package);
+                              }
                             },
-                            child: Container(
-                              margin: const EdgeInsets.only(bottom: 12),
-                              padding: const EdgeInsets.all(14),
-                              width: 64,
-                              decoration: BoxDecoration(
-                                color: detailScreenProvider.isFavorite
-                                    ? Colors.grey
-                                    : Colors.red,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(16),
-                                  topRight: Radius.circular(16),
-                                  bottomLeft: Radius.circular(16),
-                                  bottomRight: Radius.circular(16),
-                                ),
-                              ),
-                              child: const Icon(
-                                Icons.favorite,
-                                color: Colors.white,
-                                size: 24,
-                              ),
+                            child: Consumer<DetailScreenProvider>(
+                              builder: (context, detailScreenProvider, _) {
+                                return Container(
+                                  margin: const EdgeInsets.only(bottom: 12),
+                                  padding: const EdgeInsets.all(14),
+                                  width: 64,
+                                  decoration: BoxDecoration(
+                                    color: detailScreenProvider.isFavorite
+                                        ? Colors.red
+                                        : Colors.grey,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(16),
+                                      topRight: Radius.circular(16),
+                                      bottomLeft: Radius.circular(16),
+                                      bottomRight: Radius.circular(16),
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.favorite,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                );
+                              },
                             ),
-                          ),
+                          )
                         ],
                       ),
                       const SizedBox(height: 10),
