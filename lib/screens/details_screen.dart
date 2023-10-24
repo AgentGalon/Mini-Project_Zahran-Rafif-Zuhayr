@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import 'package:car_wash_app/screens/payment_method_screen.dart';
+import 'package:car_wash_app/providers/details_screen_provider.dart';
 
 class PackageDetailScreen extends StatefulWidget {
   final Map<String, dynamic> package;
@@ -14,18 +16,16 @@ class PackageDetailScreen extends StatefulWidget {
 }
 
 class _PackageDetailScreenState extends State<PackageDetailScreen> {
-  bool isFavorite = false;
   List<bool> additionalServices = List.generate(7, (index) => false);
 
-  // Daftar harga additional service
   List<double> additionalServicePrices = [
-    10.0,
-    10.0,
-    15.0,
-    12.0,
-    21.0,
-    10.0,
-    18.0
+    10.00,
+    5.00,
+    15.00,
+    10.00,
+    10.00,
+    20.00,
+    15.00
   ];
   double totalPrice = 0.0;
 
@@ -90,6 +90,8 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final detailScreenProvider = Provider.of<DetailScreenProvider>(context);
+
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -141,16 +143,16 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              setState(() {
-                                isFavorite = !isFavorite;
-                              });
+                              detailScreenProvider.toggleFavorite();
                             },
                             child: Container(
                               margin: const EdgeInsets.only(bottom: 12),
                               padding: const EdgeInsets.all(14),
                               width: 64,
                               decoration: BoxDecoration(
-                                color: isFavorite ? Colors.grey : Colors.red,
+                                color: detailScreenProvider.isFavorite
+                                    ? Colors.grey
+                                    : Colors.red,
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(16),
                                   topRight: Radius.circular(16),
@@ -225,7 +227,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    const PaymentMethodScreen(),
+                                    PaymentMethodScreen(totalPrice: totalPrice),
                               ),
                             );
                           },
@@ -238,10 +240,11 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                               ),
                             ),
                             minimumSize: MaterialStateProperty.all(
-                                const Size(double.infinity, 48)),
+                              const Size(double.infinity, 48),
+                            ),
                           ),
                           child: Text(
-                            "Buy Now".toUpperCase(),
+                            "Go to Payment".toUpperCase(),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
