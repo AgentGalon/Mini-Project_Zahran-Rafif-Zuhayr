@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:car_wash_app/providers/home_screen_provider.dart';
+import 'package:car_wash_app/screens/favorite_screen.dart';
+import 'package:car_wash_app/screens/profile_screen.dart';
 import 'package:car_wash_app/widgets/bottom_nav_bar.dart';
 import 'package:car_wash_app/widgets/featured_packages_card.dart';
-import 'package:car_wash_app/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,9 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: currentIndex == 0
           ? _buildHomeContent()
-          : currentIndex == 3
-              ? const ProfileScreen()
-              : const Placeholder(),
+          : currentIndex == 1
+              ? const FavoriteScreen()
+              : currentIndex == 3
+                  ? const ProfileScreen()
+                  : const Placeholder(),
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         onTabTapped: onTabTapped,
