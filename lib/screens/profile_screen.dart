@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:car_wash_app/widgets/profile_widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Profile"),
         // backgroundColor: Colors.transparent,
-        foregroundColor: Colors.white,
+        // foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
       ),
