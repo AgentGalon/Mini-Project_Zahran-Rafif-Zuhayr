@@ -1,46 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Body extends StatelessWidget {
-  const Body({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        children: [
-          const ProfilePic(),
-          const SizedBox(height: 20),
-          ProfileMenu(
-            text: "My Account",
-            icon: Icons.person,
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "History",
-            icon: Icons.history,
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Notifications",
-            icon: Icons.notifications,
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Favorite",
-            icon: Icons.favorite,
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Log Out",
-            icon: Icons.logout,
-            press: () {},
-          ),
-        ],
-      ),
-    );
-  }
-}
+import 'package:car_wash_app/screens/update_profile_screen.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
@@ -121,6 +81,55 @@ class ProfileMenu extends StatelessWidget {
             const Icon(Icons.arrow_forward_ios),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Body extends StatelessWidget {
+  const Body({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        children: [
+          const ProfilePic(),
+          const SizedBox(height: 20),
+          ProfileMenu(
+            text: "My Account",
+            icon: Icons.person,
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const UpdateProfileScreen(),
+                ),
+              );
+            },
+          ),
+          ProfileMenu(
+            text: "History",
+            icon: Icons.history,
+            press: () {},
+          ),
+          ProfileMenu(
+            text: "Notifications",
+            icon: Icons.notifications,
+            press: () {},
+          ),
+          ProfileMenu(
+            text: "Favorite",
+            icon: Icons.favorite,
+            press: () {},
+          ),
+          ProfileMenu(
+            text: "Log Out",
+            icon: Icons.logout,
+            press: () {},
+          ),
+        ],
       ),
     );
   }
