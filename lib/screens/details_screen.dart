@@ -145,9 +145,11 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                           GestureDetector(
                             onTap: () {
                               final homeScreenModel =
-                                  Provider.of<HomeScreenModel>(context,
+                                  Provider.of<HomeScreenProvider>(context,
                                       listen: false);
+
                               detailScreenProvider.toggleFavorite();
+
                               if (detailScreenProvider.isFavorite) {
                                 homeScreenModel.addToFavorites(widget.package);
                               } else {
@@ -240,8 +242,11 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    PaymentMethodScreen(totalPrice: totalPrice),
+                                builder: (context) => PaymentMethodScreen(
+                                  totalPrice: totalPrice,
+                                  selectedPackage: widget.package["service"],
+                                  selectedCarType: widget.package["type"],
+                                ),
                               ),
                             );
                           },
