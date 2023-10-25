@@ -9,7 +9,7 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeScreenModel = Provider.of<HomeScreenModel>(context);
+    final homeScreenModel = Provider.of<HomeScreenProvider>(context);
     final favoriteServices = homeScreenModel.favoriteServices;
 
     return Scaffold(
