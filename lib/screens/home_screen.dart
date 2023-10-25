@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final homeScreenModel = Provider.of<HomeScreenModel>(context);
+    final homeScreenModel = Provider.of<HomeScreenProvider>(context);
     int currentIndex = homeScreenModel.currentIndex;
 
     void onTabTapped(int index) {
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var size = MediaQuery.of(context).size;
     var height = size.height;
 
-    final homeScreenModel = Provider.of<HomeScreenModel>(context);
+    final homeScreenModel = Provider.of<HomeScreenProvider>(context);
     Category selectedCategory = homeScreenModel.selectedCategory;
 
     return Padding(
@@ -180,7 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCategoryButton(String title, Category category) {
-    final homeScreenModel = Provider.of<HomeScreenModel>(context);
+    final homeScreenModel = Provider.of<HomeScreenProvider>(context);
+
     return Container(
       margin: const EdgeInsets.only(right: 12),
       child: ElevatedButton(
