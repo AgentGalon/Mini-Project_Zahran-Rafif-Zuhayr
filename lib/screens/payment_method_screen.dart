@@ -1,13 +1,23 @@
-import 'package:car_wash_app/providers/payment_method_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import 'package:car_wash_app/models/payment.dart';
+import 'package:car_wash_app/providers/history_provider.dart';
+import 'package:car_wash_app/screens/payment_confirm_screen.dart';
+import 'package:car_wash_app/providers/payment_method_provider.dart';
+
 class PaymentMethodScreen extends StatefulWidget {
   final double totalPrice;
+  final String selectedPackage;
+  final String selectedCarType;
 
-  const PaymentMethodScreen({Key? key, required this.totalPrice})
-      : super(key: key);
+  const PaymentMethodScreen({
+    Key? key,
+    required this.totalPrice,
+    required this.selectedPackage,
+    required this.selectedCarType,
+  }) : super(key: key);
 
   @override
   State<PaymentMethodScreen> createState() => _PaymentMethodScreenState();
@@ -68,7 +78,47 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      String selectedPaymentMethod = "PayPal";
+                      if (Provider.of<PaymentMethodProvider>(context,
+                                  listen: false)
+                              .type ==
+                          2) {
+                        selectedPaymentMethod = "Google Pay";
+                      } else if (Provider.of<PaymentMethodProvider>(context,
+                                  listen: false)
+                              .type ==
+                          3) {
+                        selectedPaymentMethod = "Apple Pay";
+                      } else if (Provider.of<PaymentMethodProvider>(context,
+                                  listen: false)
+                              .type ==
+                          4) {
+                        selectedPaymentMethod = "Amazon Pay";
+                      }
+
+                      // Buat objek Payment
+                      Payment payment = Payment(
+                        selectedPackage: widget.selectedPackage,
+                        selectedCarType: widget.selectedCarType,
+                        totalPrice: widget.totalPrice,
+                      );
+
+                      // Tambahkan pembayaran ke daftar
+                      Provider.of<HistoryProvider>(context, listen: false)
+                          .addPayment(payment);
+
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => PaymentConfirmationScreen(
+                            totalPrice: widget.totalPrice,
+                            paymentMethod: selectedPaymentMethod,
+                            selectedPackage: widget.selectedPackage,
+                            selectedCarType: widget.selectedCarType,
+                          ),
+                        ),
+                      );
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),
                       shape: MaterialStateProperty.all(
