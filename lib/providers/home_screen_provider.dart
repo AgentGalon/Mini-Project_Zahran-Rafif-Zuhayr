@@ -8,7 +8,7 @@ enum Category {
   classic,
 }
 
-class HomeScreenModel extends ChangeNotifier {
+class HomeScreenProvider extends ChangeNotifier {
   int _currentIndex = 0;
   Category _selectedCategory = Category.all;
   final List<Map<String, dynamic>> _favoriteServices = [];
