@@ -8,6 +8,7 @@ import 'package:car_wash_app/providers/login_provider.dart';
 import 'package:car_wash_app/providers/home_screen_provider.dart';
 import 'package:car_wash_app/providers/details_screen_provider.dart';
 import 'package:car_wash_app/providers/payment_method_provider.dart';
+import 'package:car_wash_app/providers/history_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,9 +22,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => HomeScreenModel()),
+        ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
         ChangeNotifierProvider(create: (context) => DetailScreenProvider()),
         ChangeNotifierProvider(create: (context) => PaymentMethodProvider()),
+        ChangeNotifierProvider(create: (context) => HistoryProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
