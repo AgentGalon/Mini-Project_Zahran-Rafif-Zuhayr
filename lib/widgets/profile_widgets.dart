@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:car_wash_app/screens/history_screen.dart';
 import 'package:car_wash_app/screens/update_profile_screen.dart';
 
 class ProfilePic extends StatelessWidget {
@@ -112,7 +113,14 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "History",
             icon: Icons.history,
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HistoryScreen(payments: []),
+                ),
+              );
+            },
           ),
           ProfileMenu(
             text: "Notifications",
