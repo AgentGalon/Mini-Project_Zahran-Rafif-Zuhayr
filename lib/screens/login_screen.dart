@@ -13,12 +13,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController =
-      TextEditingController(text: "eve.holt@reqres.in");
+      TextEditingController(text: "zahranrafif@gmail.com");
   TextEditingController passwordController =
-      TextEditingController(text: "cityslicka");
+      TextEditingController(text: "passwordnya123");
   bool rememberUser = false;
   bool isLoading = false;
-  bool isPasswordVisible = false;
   late Color myColor;
   late Size mediaSize;
 
@@ -196,7 +195,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void _handleLogin(BuildContext context) async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    if (isLoading) return;
 
     setState(() {
       isLoading = true;
@@ -212,29 +210,41 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (authProvider.isLoggedIn) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
+      Future.delayed(Duration.zero, () {
+        _navigateToHome(context);
+      });
     } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text("Login Failed"),
-            content: const Text("Email or password is incorrect"),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
+      Future.delayed(Duration.zero, () {
+        _showLoginFailedDialog(context);
+      });
     }
+  }
+
+  void _navigateToHome(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+      ),
+    );
+  }
+
+  void _showLoginFailedDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Login Failed"),
+          content: const Text("Email or password is incorrect"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

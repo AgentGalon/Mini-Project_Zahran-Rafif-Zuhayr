@@ -1,7 +1,10 @@
+import 'package:car_wash_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:car_wash_app/screens/history_screen.dart';
 import 'package:car_wash_app/screens/update_profile_screen.dart';
+import 'package:car_wash_app/providers/login_provider.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
@@ -10,6 +13,9 @@ class ProfilePic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AuthProvider>(context).getUserData();
+    final photoUrl = user['photo'];
+
     return SizedBox(
       height: 115,
       width: 115,
@@ -17,31 +23,15 @@ class ProfilePic extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage("assets/images/carwash_1.png"),
+          CircleAvatar(
+            backgroundImage: NetworkImage(photoUrl),
           ),
-          Positioned(
+          const Positioned(
             right: -16,
             bottom: 0,
             child: SizedBox(
               height: 46,
               width: 46,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    side: const BorderSide(color: Colors.white),
-                  ),
-                  backgroundColor: const Color(0xFFF5F6F9),
-                ),
-                onPressed: () {},
-                child: const Icon(
-                  Icons.edit,
-                  color: Colors.red,
-                  size: 22,
-                ),
-              ),
             ),
           )
         ],
@@ -135,7 +125,18 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Log Out",
             icon: Icons.logout,
-            press: () {},
+            press: () {
+              // Akses AuthProvider dan panggil fungsi logout
+              Provider.of<AuthProvider>(context, listen: false).logout();
+
+              // Setelah logout, Anda dapat membuka halaman login
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
+            },
           ),
         ],
       ),

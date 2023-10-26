@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:car_wash_app/providers/home_screen_provider.dart';
 import 'package:car_wash_app/screens/favorite_screen.dart';
 import 'package:car_wash_app/screens/profile_screen.dart';
+import 'package:car_wash_app/screens/notification_screen.dart';
 import 'package:car_wash_app/widgets/bottom_nav_bar.dart';
 import 'package:car_wash_app/widgets/featured_packages_card.dart';
+import 'package:car_wash_app/providers/login_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,7 +19,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final homeScreenModel = Provider.of<HomeScreenProvider>(context);
+    final homeScreenModel =
+        Provider.of<HomeScreenProvider>(context, listen: false);
     int currentIndex = homeScreenModel.currentIndex;
 
     void onTabTapped(int index) {
@@ -29,9 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ? _buildHomeContent()
           : currentIndex == 1
               ? const FavoriteScreen()
-              : currentIndex == 3
-                  ? const ProfileScreen()
-                  : const Placeholder(),
+              : currentIndex == 2
+                  ? const NotificationScreen()
+                  : currentIndex == 3
+                      ? const ProfileScreen()
+                      : const Placeholder(),
       bottomNavigationBar: BottomNavBar(
         currentIndex: currentIndex,
         onTabTapped: onTabTapped,
@@ -44,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
     var height = size.height;
 
     final homeScreenModel = Provider.of<HomeScreenProvider>(context);
+    final username = Provider.of<AuthProvider>(context).username;
+
     Category selectedCategory = homeScreenModel.selectedCategory;
 
     return Padding(
@@ -63,17 +70,17 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hey Zahran",
-                        style: TextStyle(
+                        "Welcome, $username",
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
+                      const Text(
                         "What do you need \nhelp with today?",
                         style: TextStyle(
                           fontSize: 18,
