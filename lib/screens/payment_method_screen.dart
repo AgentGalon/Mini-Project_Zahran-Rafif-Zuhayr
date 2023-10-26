@@ -6,6 +6,7 @@ import 'package:car_wash_app/models/payment.dart';
 import 'package:car_wash_app/providers/history_provider.dart';
 import 'package:car_wash_app/screens/payment_confirm_screen.dart';
 import 'package:car_wash_app/providers/payment_method_provider.dart';
+import 'package:car_wash_app/providers/notification_provider.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
   final double totalPrice;
@@ -28,14 +29,14 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Method Payment"),
-        leading: const CupertinoNavigationBarBackButton(
-          color: Colors.black,
-        ),
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
+        title: const Text("Method Payment"),
+        leading: const CupertinoNavigationBarBackButton(
+          color: Colors.black,
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -108,6 +109,12 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                       // Tambahkan pembayaran ke daftar
                       Provider.of<HistoryProvider>(context, listen: false)
                           .addPayment(payment);
+
+                      // Tambahkan notifikasi ke daftar halamannya
+                      Provider.of<NotificationProvider>(context, listen: false)
+                          .addNotification(
+                        "Payment successful. ${widget.selectedPackage}, ${widget.selectedCarType}",
+                      );
 
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(

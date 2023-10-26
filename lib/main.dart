@@ -9,6 +9,7 @@ import 'package:car_wash_app/providers/home_screen_provider.dart';
 import 'package:car_wash_app/providers/details_screen_provider.dart';
 import 'package:car_wash_app/providers/payment_method_provider.dart';
 import 'package:car_wash_app/providers/history_provider.dart';
+import 'package:car_wash_app/providers/notification_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DetailScreenProvider()),
         ChangeNotifierProvider(create: (context) => PaymentMethodProvider()),
         ChangeNotifierProvider(create: (context) => HistoryProvider()),
+        ChangeNotifierProvider(create: (context) => NotificationProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
