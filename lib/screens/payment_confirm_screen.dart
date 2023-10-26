@@ -40,14 +40,14 @@ class PaymentConfirmationScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Payment Confirmation"),
-        leading: const CupertinoNavigationBarBackButton(
-          color: Colors.black,
-        ),
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
+        title: const Text("Payment Confirmation"),
+        leading: const CupertinoNavigationBarBackButton(
+          color: Colors.black,
+        ),
       ),
       body: SafeArea(
         child: Padding(

@@ -40,7 +40,7 @@ class BottomNavBar extends StatelessWidget {
             ),
             GButton(
               icon: Icons.person,
-              text: "Account",
+              text: "Profile",
             ),
           ],
           selectedIndex: currentIndex,

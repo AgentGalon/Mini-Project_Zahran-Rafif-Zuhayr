@@ -9,14 +9,15 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeScreenModel = Provider.of<HomeScreenProvider>(context);
+    final homeScreenModel =
+        Provider.of<HomeScreenProvider>(context, listen: false);
     final favoriteServices = homeScreenModel.favoriteServices;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Favorite"),
         elevation: 0,
         centerTitle: true,
+        title: const Text("Favorite"),
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

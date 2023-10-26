@@ -91,7 +91,8 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final detailScreenProvider = Provider.of<DetailScreenProvider>(context);
+    final detailScreenProvider =
+        Provider.of<DetailScreenProvider>(context, listen: false);
 
     return Scaffold(
       body: CustomScrollView(

@@ -15,10 +15,13 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final payments = Provider.of<HistoryProvider>(context).payments;
+    final payments =
+        Provider.of<HistoryProvider>(context, listen: false).payments;
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         title: const Text("Payment History"),
       ),
       body: ListView.builder(
