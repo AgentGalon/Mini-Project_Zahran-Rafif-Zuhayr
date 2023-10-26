@@ -31,22 +31,46 @@ class HistoryScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => PaymentConfirmationScreen(
                     totalPrice: payment.totalPrice,
-                    paymentMethod: payment.selectedPackage,
+                    paymentMethod: payment.paymentMethod,
                     selectedPackage: payment.selectedPackage,
                     selectedCarType: payment.selectedCarType,
                   ),
                 ),
               );
             },
-            child: ListTile(
-              title: Text(
-                "Package: ${payment.selectedPackage}",
-              ),
-              subtitle: Text(
-                "Car Type: ${payment.selectedCarType}",
-              ),
-              trailing: Text(
-                "Total Prize: \$${payment.totalPrice.toStringAsFixed(2)}",
+            child: Card(
+              elevation: 2,
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Package: ${payment.selectedPackage}",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "Car Type: ${payment.selectedCarType}",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      "Total Prize: \$${payment.totalPrice.toStringAsFixed(2)}",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

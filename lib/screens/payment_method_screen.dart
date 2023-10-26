@@ -102,6 +102,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                         selectedPackage: widget.selectedPackage,
                         selectedCarType: widget.selectedCarType,
                         totalPrice: widget.totalPrice,
+                        paymentMethod: selectedPaymentMethod,
                       );
 
                       // Tambahkan pembayaran ke daftar
