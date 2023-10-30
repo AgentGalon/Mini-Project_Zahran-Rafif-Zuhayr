@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,11 +20,21 @@ class HistoryScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: const Text("Payment History"),
+        leading: const CupertinoNavigationBarBackButton(
+          color: Colors.black,
+        ),
         actions: [
           IconButton(
             onPressed: () {
               // Tambahkan logika penghapusan disini
               historyProvider.clearPayments();
+
+              // Tampilan SnackBar setelah berhasil menghapus history
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Delete success'),
+                ),
+              );
             },
             icon: const Icon(Icons.delete),
           ),

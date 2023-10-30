@@ -126,6 +126,13 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                           ),
                         ),
                       );
+
+                      // Tampilan SnackBar setelah berhasil melakukan pembayaran
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Payment success'),
+                        ),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),

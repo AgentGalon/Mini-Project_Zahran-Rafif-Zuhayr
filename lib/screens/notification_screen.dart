@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,9 @@ class NotificationScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: const Text("Notification"),
+        leading: const CupertinoNavigationBarBackButton(
+          color: Colors.black,
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -26,6 +30,13 @@ class NotificationScreen extends StatelessWidget {
 
               // Hapus notifikasi dari shared_preferences
               notificationProvider.clearSavedNotifications();
+
+              // Tampilan SnackBar setelah berhasil menghapus notifikasi
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Delete success'),
+                ),
+              );
             },
           ),
         ],
