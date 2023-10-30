@@ -60,7 +60,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                   icon: const Icon(Icons.send_rounded),
                   onPressed: () {
                     chatBotProvider.handleSubmittedMessage(
-                        chatBotProvider.messageController.text);
+                      chatBotProvider.messageController.text,
+                    );
                   },
                 ),
               ],
