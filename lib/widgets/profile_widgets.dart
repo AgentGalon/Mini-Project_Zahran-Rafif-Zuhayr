@@ -6,7 +6,7 @@ import 'package:car_wash_app/screens/history_screen.dart';
 import 'package:car_wash_app/screens/favorite_screen.dart';
 import 'package:car_wash_app/providers/login_provider.dart';
 import 'package:car_wash_app/screens/notification_screen.dart';
-import 'package:car_wash_app/screens/update_profile_screen.dart';
+import 'package:car_wash_app/screens/edit_profile_screen.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
