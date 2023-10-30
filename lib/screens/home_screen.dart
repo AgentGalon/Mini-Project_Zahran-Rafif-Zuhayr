@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:car_wash_app/providers/home_screen_provider.dart';
-import 'package:car_wash_app/screens/favorite_screen.dart';
+import 'package:car_wash_app/screens/chatbot_screen.dart';
 import 'package:car_wash_app/screens/profile_screen.dart';
-import 'package:car_wash_app/screens/notification_screen.dart';
 import 'package:car_wash_app/widgets/bottom_nav_bar.dart';
-import 'package:car_wash_app/widgets/featured_packages_card.dart';
+import 'package:car_wash_app/screens/favorite_screen.dart';
 import 'package:car_wash_app/providers/login_provider.dart';
+import 'package:car_wash_app/screens/notification_screen.dart';
+import 'package:car_wash_app/widgets/featured_packages_card.dart';
+import 'package:car_wash_app/providers/home_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           : currentIndex == 1
               ? const FavoriteScreen()
               : currentIndex == 2
-                  ? const NotificationScreen()
+                  ? const ChatBotScreen()
                   : currentIndex == 3
                       ? const ProfileScreen()
                       : const Placeholder(),
@@ -98,7 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         Icons.notifications,
                       ),
                       alignment: Alignment.topRight,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationScreen(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -112,15 +120,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: SizedBox(
                     height: height * 0.058,
                     child: TextField(
-                      cursorColor: Colors.grey,
+                      cursorColor: Colors.white54,
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 12),
-                        fillColor: Colors.grey.shade400,
                         filled: true,
+                        fillColor: Colors.white,
                         border: OutlineInputBorder(
+                          // Menambahkan border
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 1.0,
+                          ),
                         ),
                         hintText: 'Search for service',
                         hintStyle: const TextStyle(
@@ -199,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: MaterialStateProperty.all(
             homeScreenModel.selectedCategory == category
                 ? Colors.red
-                : Colors.grey,
+                : Colors.white,
           ),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
