@@ -63,7 +63,8 @@ class ProfileMenu extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          backgroundColor: const Color(0xFFF5F6F9),
+          backgroundColor: const Color(0xFFFFFFFF),
+          elevation: 3,
         ),
         onPressed: press,
         child: Row(
@@ -92,7 +93,7 @@ class Body extends StatelessWidget {
           const SizedBox(height: 20),
           ProfileMenu(
             text: "My Account",
-            icon: Icons.person,
+            icon: Icons.person_outline,
             press: () {
               Navigator.push(
                 context,
@@ -104,7 +105,7 @@ class Body extends StatelessWidget {
           ),
           ProfileMenu(
             text: "History",
-            icon: Icons.history,
+            icon: Icons.history_outlined,
             press: () {
               Navigator.push(
                 context,
@@ -116,7 +117,7 @@ class Body extends StatelessWidget {
           ),
           ProfileMenu(
             text: "Notifications",
-            icon: Icons.notifications,
+            icon: Icons.notifications_outlined,
             press: () {
               Navigator.push(
                 context,
@@ -128,7 +129,7 @@ class Body extends StatelessWidget {
           ),
           ProfileMenu(
             text: "Favorite",
-            icon: Icons.favorite,
+            icon: Icons.favorite_outline,
             press: () {
               Navigator.push(
                 context,
@@ -140,7 +141,7 @@ class Body extends StatelessWidget {
           ),
           ProfileMenu(
             text: "Log Out",
-            icon: Icons.logout,
+            icon: Icons.logout_outlined,
             press: () {
               // Akses AuthProvider dan panggil fungsi logout
               Provider.of<AuthProvider>(context, listen: false).logout();
