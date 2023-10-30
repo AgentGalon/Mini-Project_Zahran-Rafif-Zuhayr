@@ -6,8 +6,10 @@ import 'package:car_wash_app/providers/home_provider.dart';
 class RecomendCard extends StatefulWidget {
   final Category selectedCategory;
 
-  const RecomendCard({Key? key, required this.selectedCategory})
-      : super(key: key);
+  const RecomendCard({
+    Key? key,
+    required this.selectedCategory,
+  }) : super(key: key);
 
   @override
   State<RecomendCard> createState() => _RecomendCardState();

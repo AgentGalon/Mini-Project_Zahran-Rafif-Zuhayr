@@ -14,15 +14,15 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: Colors.red.shade700,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: GNav(
           tabBorderRadius: 12,
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.red.shade700,
           color: Colors.white,
           activeColor: Colors.white,
-          tabBackgroundColor: Colors.grey.shade800,
+          tabBackgroundColor: Colors.white10,
           gap: 6,
           padding: const EdgeInsets.all(8),
           tabs: const [
