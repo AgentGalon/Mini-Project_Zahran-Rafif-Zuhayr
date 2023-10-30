@@ -27,6 +27,7 @@ class AuthProvider with ChangeNotifier {
   bool _rememberUser = false;
   bool get rememberUser => _rememberUser;
 
+  // Mendapatkan data pengguna saat ini.
   Map<String, dynamic> getUserData() {
     return {
       'username': _username,
@@ -37,6 +38,7 @@ class AuthProvider with ChangeNotifier {
     };
   }
 
+  // Metode login user berdasarkan email dan kata sandi.
   Future<void> login(String email, String password) async {
     final response = await http.get(
       Uri.parse('https://653a61d92e42fd0d54d3c874.mockapi.io/user'),
@@ -57,7 +59,7 @@ class AuthProvider with ChangeNotifier {
         if (password == storedPassword) {
           _isLoggedIn = true;
 
-          // Simpan semua data pengguna
+          // Simpan data pengguna
           _username = user['username'];
           _email = user['email'];
           _phone = user['phone'];
@@ -86,12 +88,54 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // Untuk mengirim perubahan data pengguna ke server.
+  Future<void> updateUserData(Map<String, dynamic> updatedData) async {
+    final response = await http.get(
+      Uri.parse('https://653a61d92e42fd0d54d3c874.mockapi.io/user'),
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> responseData = json.decode(response.body);
+
+      // Cari pengguna dengan alamat email yang sesuai
+      final user = responseData.firstWhere(
+        (userData) => userData['email'] == _email,
+        orElse: () => null,
+      );
+
+      // Memperbarui data pengguna dari edit profile.
+      if (user != null) {
+        user['username'] = updatedData['username'];
+        user['email'] = updatedData['email'];
+        user['phone'] = updatedData['phone'];
+        user['password'] = updatedData['password'];
+
+        // Mengirim perubahan data pengguna ke api.
+        final putResponse = await http.put(
+          Uri.parse(
+              'https://653a61d92e42fd0d54d3c874.mockapi.io/user/${user['id']}'),
+          body: json.encode(user),
+          headers: {'Content-Type': 'application/json'},
+        );
+
+        if (putResponse.statusCode == 200) {
+          _username = user['username'];
+          _email = user['email'];
+          _phone = user['phone'];
+          _password = user['password'];
+        }
+      }
+    }
+
+    notifyListeners();
+  }
+
   void logout() {
     _isLoggedIn = false;
     _username = null;
     _email = null;
     _phone = null;
-    // _photo = null;
+    _photo = null;
     notifyListeners();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-
 import 'package:car_wash_app/providers/login_provider.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
@@ -10,6 +9,11 @@ class UpdateProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AuthProvider>(context).getUserData();
+    final usernameController = TextEditingController(text: user['username']);
+    final emailController = TextEditingController(text: user['email']);
+    final phoneController =
+        TextEditingController(text: user['phone'].toString());
+    final passwordController = TextEditingController(text: user['password']);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,9 +38,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     height: 120,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: Image.network(
-                        user['photo'],
-                      ),
+                      child: Image.network(user['photo']),
                     ),
                   ),
                 ],
@@ -48,7 +50,7 @@ class UpdateProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      initialValue: user['username'],
+                      controller: usernameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(100),
@@ -59,7 +61,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      initialValue: user['email'],
+                      controller: emailController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(100),
@@ -70,7 +72,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      initialValue: user['phone'].toString(),
+                      controller: phoneController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(100),
@@ -81,7 +83,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      initialValue: user['password'],
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -99,7 +101,22 @@ class UpdateProfileScreen extends StatelessWidget {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          // logika buat menyimpan perubahan pada profil
+                          final updatedData = {
+                            'username': usernameController.text,
+                            'email': emailController.text,
+                            'phone': int.parse(phoneController.text),
+                            'password': passwordController.text,
+                          };
+
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .updateUserData(updatedData);
+
+                          // Tampilan SnackBar setelah berhasil update profil
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Profil berhasil diperbarui'),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           side: BorderSide.none,
