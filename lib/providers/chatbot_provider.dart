@@ -6,14 +6,18 @@ import 'package:car_wash_app/models/chatbot.dart';
 import 'package:car_wash_app/api/key/api_openai.dart';
 
 class ChatBotProvider with ChangeNotifier {
+  // Controller untuk mengelola input teks dari pengguna
   TextEditingController messageController = TextEditingController();
+
+  // Daftar pesan chat
   List<ChatMessage> chatMessages = [];
 
+  // Mendapatkan respons dari chatbot menggunakan OpenAI API
   Future<void> _getChatBotResponse(String query) async {
     // token API dari OpenAI
     const token = OpenAiKey.openaiToken;
 
-    // ketika respons dari chat bot.
+    // Menampilkan pesan "Typing..." saat menunggu respons dari chatbot
     addChatMessage('Typing...', isBotResponse: true);
 
     if (_isAllowedTopic(query)) {
@@ -39,6 +43,8 @@ class ChatBotProvider with ChangeNotifier {
 
           // Hapus teks "Typing..." dari daftar pesan jika sudah merespon
           chatMessages.removeWhere((message) => message.text == 'Typing...');
+
+          // Menambahkan respon chatbot ke daftar pesan
           addChatMessage(botResponse, isBotResponse: true);
         } else {
           addChatMessage('Failed to get response.', isBotResponse: true);
@@ -56,6 +62,7 @@ class ChatBotProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // Memeriksa apakah pertanyaan pengguna berada di topik yang diizinkan
   bool _isAllowedTopic(String question) {
     return question.toLowerCase().contains('car wash') ||
         question.toLowerCase().contains('bronze package') ||
@@ -68,20 +75,23 @@ class ChatBotProvider with ChangeNotifier {
         question.toLowerCase().contains('classic');
   }
 
+  // Menambahkan pesan ke daftar chat
   void addChatMessage(String text, {bool isBotResponse = false}) {
     ChatMessage message = ChatMessage(text: text, isBotResponse: isBotResponse);
     chatMessages.add(message);
     notifyListeners();
   }
 
+  // Menangani pesan yang dikirimkan oleh pengguna
   void handleSubmittedMessage(String text) {
     if (text.isNotEmpty) {
       addChatMessage(text);
-      _getChatBotResponse(text);
-      messageController.clear();
+      _getChatBotResponse(text); // Mengirim pertanyaan pengguna ke chatbot
+      messageController.clear(); // Membersihkan input teks
     }
   }
 
+  // Menghapus semua pesan dari daftar chat
   void clearChat() {
     chatMessages.clear();
     notifyListeners();

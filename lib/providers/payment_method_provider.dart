@@ -7,6 +7,7 @@ class PaymentMethodProvider with ChangeNotifier {
   int get type => _type;
   double get fee => _fee;
 
+  // Untuk mengatur jenis pembayaran
   void setPaymentType(int newType, double newFee) {
     _type = newType;
     _fee = newFee;

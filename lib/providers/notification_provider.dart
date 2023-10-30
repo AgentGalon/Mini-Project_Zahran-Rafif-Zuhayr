@@ -5,7 +5,7 @@ class NotificationProvider extends ChangeNotifier {
   List<String> notifications = [];
 
   NotificationProvider() {
-    // Mengambil notifikasi yang tersimpan dalam Shared Preferences saat aplikasi dimuat
+    // Mengambil notifikasi dalam Shared Preferences saat aplikasi dimulai
     loadNotifications();
   }
 

@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
 import 'package:car_wash_app/models/payment.dart';
@@ -10,10 +10,11 @@ class HistoryProvider extends ChangeNotifier {
   List<Payment> get payments => _payments;
 
   HistoryProvider() {
-    // Memuat data dari Shared Preferences saat provider dibuat
+    // Memuat data dari Shared Preferences
     loadPayments();
   }
 
+  // Untuk memuat data pembayaran dari Shared Preferences
   Future<void> loadPayments() async {
     final prefs = await SharedPreferences.getInstance();
     final paymentsString = prefs.getString('payments');
@@ -27,6 +28,7 @@ class HistoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Untuk menambahkan pembayaran ke daftar pembayaran
   Future<void> addPayment(Payment payment) async {
     _payments.add(payment);
     notifyListeners();

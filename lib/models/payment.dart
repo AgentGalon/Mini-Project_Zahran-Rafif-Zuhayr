@@ -11,7 +11,7 @@ class Payment {
     required this.paymentMethod,
   });
 
-  // Tambahkan metode untuk mengonversi dari JSON ke objek Payment
+  // Metode untuk mengonversi dari JSON ke objek Payment
   factory Payment.fromJson(Map<String, dynamic> json) {
     return Payment(
       selectedPackage: json['selectedPackage'],
@@ -21,7 +21,7 @@ class Payment {
     );
   }
 
-  // Tambahkan metode untuk mengonversi dari objek Payment ke JSON
+  // Metode untuk mengonversi dari objek Payment ke JSON
   Map<String, dynamic> toJson() {
     return {
       'selectedPackage': selectedPackage,
