@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:car_wash_app/providers/home_screen_provider.dart';
+import 'package:car_wash_app/providers/home_provider.dart';
 import 'package:car_wash_app/screens/details_screen.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -9,12 +9,13 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeScreenModel =
-        Provider.of<HomeScreenProvider>(context, listen: false);
+    final homeScreenModel = Provider.of<HomeScreenProvider>(context);
     final favoriteServices = homeScreenModel.favoriteServices;
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
         title: const Text("Favorite"),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:car_wash_app/screens/details_screen.dart';
-import 'package:car_wash_app/providers/home_screen_provider.dart';
+import 'package:car_wash_app/providers/home_provider.dart';
 
 class RecomendCard extends StatefulWidget {
   final Category selectedCategory;
@@ -16,97 +16,97 @@ class RecomendCard extends StatefulWidget {
 class _RecomendCardState extends State<RecomendCard> {
   List<Map<String, dynamic>> recmcard = [
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/sports01-car_wash_9_11zon.jpg",
       "service": "Bronze Package",
       "type": "Sport",
       "price": "10.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/sports02-car_wash_8_11zon.jpg",
       "service": "Silver Package",
       "type": "Sport",
       "price": "15.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/sports03-car_wash_7_11zon.jpg",
       "service": "Gold Package",
       "type": "Sport",
       "price": "20.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/sports04-car_wash_6_11zon.jpeg",
       "service": "Platinum Package",
       "type": "Sport",
       "price": "35.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/sedan01-car_wash_13_11zon.jpg",
       "service": "Bronze Package",
       "type": "Sedan",
       "price": "10.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/sedan02-car_wash_12_11zon.jpg",
       "service": "Silver Package",
       "type": "Sedan",
       "price": "15.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/sedan03-car_wash_11_11zon.jpg",
       "service": "Gold Package",
       "type": "Sedan",
       "price": "20.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/sedan04-car_wash_10_11zon.jpg",
       "service": "Platinum Package",
       "type": "Sedan",
       "price": "35.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/suv01-car_wash_5_11zon.jpg",
       "service": "Bronze Package",
       "type": "SUV",
       "price": "12.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/suv03-car_wash_3_11zon.jpg",
       "service": "Silver Package",
       "type": "SUV",
       "price": "18.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/suv04-car_wash_2_11zon.jpg",
       "service": "Gold Package",
       "type": "SUV",
       "price": "25.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/suv05-car_wash_1_11zon.jpg",
       "service": "Platinum Package",
       "type": "SUV",
       "price": "40.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/classic01-car_wash_15_11zon.jpg",
       "service": "Bronze Package",
       "type": "Classic",
       "price": "12.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/classic02-car_wash_14_11zon.jpg",
       "service": "Silver Package",
       "type": "Classic",
       "price": "18.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/classic01-car_wash_15_11zon.jpg",
       "service": "Gold Package",
       "type": "Classic",
       "price": "25.00",
     },
     {
-      "image": "assets/images/carwash_1.png",
+      "image": "assets/images/classic02-car_wash_14_11zon.jpg",
       "service": "Platinum Package",
       "type": "Classic",
       "price": "40.00",

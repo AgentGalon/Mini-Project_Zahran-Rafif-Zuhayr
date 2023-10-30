@@ -16,7 +16,7 @@ class BottomNavBar extends StatelessWidget {
     return Container(
       color: Colors.black,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: GNav(
           tabBorderRadius: 12,
           backgroundColor: Colors.black,
@@ -35,8 +35,8 @@ class BottomNavBar extends StatelessWidget {
               text: "Favorite",
             ),
             GButton(
-              icon: Icons.notifications,
-              text: "Notification",
+              icon: Icons.chat,
+              text: "ChatBot",
             ),
             GButton(
               icon: Icons.person,

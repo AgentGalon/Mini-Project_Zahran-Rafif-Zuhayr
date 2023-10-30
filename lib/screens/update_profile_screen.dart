@@ -99,7 +99,7 @@ class UpdateProfileScreen extends StatelessWidget {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Tambahkan logika untuk menyimpan perubahan pada profil di sini
+                          // logika buat menyimpan perubahan pada profil
                         },
                         style: ElevatedButton.styleFrom(
                           side: BorderSide.none,

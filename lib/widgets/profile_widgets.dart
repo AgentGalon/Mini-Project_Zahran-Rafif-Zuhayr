@@ -1,10 +1,12 @@
-import 'package:car_wash_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:car_wash_app/main.dart';
 import 'package:car_wash_app/screens/history_screen.dart';
-import 'package:car_wash_app/screens/update_profile_screen.dart';
+import 'package:car_wash_app/screens/favorite_screen.dart';
 import 'package:car_wash_app/providers/login_provider.dart';
+import 'package:car_wash_app/screens/notification_screen.dart';
+import 'package:car_wash_app/screens/update_profile_screen.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
@@ -115,12 +117,26 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Notifications",
             icon: Icons.notifications,
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationScreen(),
+                ),
+              );
+            },
           ),
           ProfileMenu(
             text: "Favorite",
             icon: Icons.favorite,
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FavoriteScreen(),
+                ),
+              );
+            },
           ),
           ProfileMenu(
             text: "Log Out",
@@ -133,7 +149,7 @@ class Body extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
+                  builder: (context) => const MyApp(),
                 ),
               );
             },

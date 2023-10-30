@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'package:car_wash_app/providers/home_screen_provider.dart';
+import 'package:car_wash_app/providers/home_provider.dart';
 import 'package:car_wash_app/providers/details_screen_provider.dart';
 import 'package:car_wash_app/screens/payment_method_screen.dart';
 
@@ -183,7 +183,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                                 );
                               },
                             ),
-                          )
+                          ),
                         ],
                       ),
                       const SizedBox(height: 10),
