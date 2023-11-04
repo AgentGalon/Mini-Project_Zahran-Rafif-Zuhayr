@@ -12,10 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController emailController =
-      TextEditingController(text: "zahranrafif@gmail.com");
-  TextEditingController passwordController =
-      TextEditingController(text: "passwordnya123");
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
   bool isLoading = false;
   late Color myColor;

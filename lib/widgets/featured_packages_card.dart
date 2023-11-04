@@ -173,7 +173,7 @@ class _RecomendCardState extends State<RecomendCard> {
                         package["service"],
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 16,
                         ),
                       ),
                       Row(
@@ -183,7 +183,7 @@ class _RecomendCardState extends State<RecomendCard> {
                             package["type"],
                             style: const TextStyle(
                               fontWeight: FontWeight.normal,
-                              fontSize: 15,
+                              fontSize: 14,
                             ),
                           ),
                         ],

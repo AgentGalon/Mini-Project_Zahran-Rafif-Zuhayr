@@ -127,7 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
-                          // Menambahkan border
                           borderRadius: BorderRadius.circular(10),
                           borderSide: const BorderSide(
                             color: Colors.grey,

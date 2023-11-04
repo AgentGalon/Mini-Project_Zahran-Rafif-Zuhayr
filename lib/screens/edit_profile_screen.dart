@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:email_validator/email_validator.dart';
+
 import 'package:car_wash_app/providers/login_provider.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
@@ -47,6 +49,7 @@ class UpdateProfileScreen extends StatelessWidget {
 
               // Form Fields
               Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
                     TextFormField(
@@ -69,7 +72,15 @@ class UpdateProfileScreen extends StatelessWidget {
                         labelText: "Email",
                         prefixIcon: const Icon(Icons.mail),
                       ),
+                      // Validasi email saat pengguna mengetik.
+                      validator: (value) {
+                        if (!EmailValidator.validate(value!)) {
+                          return 'Enter a valid email';
+                        }
+                        return null; // jika Email valid.
+                      },
                     ),
+
                     const SizedBox(height: 20),
                     TextFormField(
                       controller: phoneController,
