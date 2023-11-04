@@ -31,7 +31,7 @@ class ChatBotProvider with ChangeNotifier {
           body: jsonEncode({
             'model': 'text-davinci-003',
             'prompt': 'Question: $query\nBot:',
-            'max_tokens': 30,
+            'max_tokens': 50,
             'temperature': 1,
             'top_p': 1,
           }),
